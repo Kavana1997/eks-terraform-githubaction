@@ -1,19 +1,30 @@
-output "endpoint" {
-  value = aws_eks_cluster.this.endpoint
-}
-
-output "kubeconfig_certificate_authority_data" {
-  value = aws_eks_cluster.this.certificate_authority[0].data
+output "vpc_id" {
+  description = "The ID of the VPC"
+  value       = module.vpc.vpc_id
 }
 
 output "cluster_name" {
-  value = aws_eks_cluster.this.name
+  description = "The name of the EKS cluster"
+  value       = module.eks.cluster_name
 }
 
-output "cluster_id" {
-  value = aws_eks_cluster.this.id
+output "cluster_endpoint" {
+  description = "The endpoint for the EKS control plane"
+  value       = module.eks.cluster_endpoint
 }
 
-output "region" {
-  value = var.region
+output "cluster_certificate_authority_data" {
+  description = "Certificate authority data for the cluster"
+  value       = module.eks.cluster_certificate_authority_data
+  sensitive   = true
+}
+
+output "kubectl_command" {
+  description = "Command to update kubeconfig"
+  value       = "aws eks update-kubeconfig --name ${module.eks.cluster_name} --region ${var.region}"
+}
+
+output "node_groups" {
+  description = "Node groups created"
+  value       = module.eks.eks_managed_node_groups
 }

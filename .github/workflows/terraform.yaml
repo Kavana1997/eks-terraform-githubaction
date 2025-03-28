@@ -146,12 +146,12 @@ jobs:
           cd ${{ env.TERRAFORM_DIR }}
           echo "EKS Cluster Details:"
           terraform output
-      
       - name: Upload Terraform State Summary
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4  # Change from v3 to v4
         with:
           name: terraform-state-summary
           path: |
             ${{ env.TERRAFORM_DIR }}/.terraform/terraform.tfstate
             ${{ env.TERRAFORM_DIR }}/tfplan
+       
